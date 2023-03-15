@@ -9,4 +9,6 @@ export default {
   // setupFiles: [],
   testMatch: ['**/tests/**/?(*.)+(spec|test).ts'],
   verbose: true,
+  preset: 'ts-jest',
+  testEnvironment: 'node',
 };
