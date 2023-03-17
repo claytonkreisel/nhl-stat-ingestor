@@ -35,8 +35,8 @@
     "entity:create": "wrap () { npx typeorm-ts-node-commonjs entity:create ./src/orm/entities/\"$*\" | cat; }; wrap",
     "test": "jest --silent",
     "test:loud": "jest",
-    "test:e2e": "yarn test --testMatch='**/tests/e2e/**/?(*.)+(spec|test).ts'",
-    "test:unit": "yarn test --testMatch='**/tests/unit/**/?(*.)+(spec|test).ts'",
+    "test:e2e": "yarn test --testMatch='**/tests/e2e/**/?(*.)+(spec|test).ts' --silent",
+    "test:unit": "yarn test --testMatch='**/tests/unit/**/?(*.)+(spec|test).ts' --silent",
     "setup": "sh bin/setup.sh"
   }
 }
