@@ -14,7 +14,7 @@ export class SeasonStatLine {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Season)
+  @ManyToOne(() => Season, season => season.playerStats)
   season: Season;
 
   @ManyToOne(() => Player)

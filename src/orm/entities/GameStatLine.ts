@@ -17,7 +17,7 @@ export class GameStatLine {
   @ManyToOne(() => Game, game => game.stats)
   game: Game;
 
-  @ManyToOne(() => TeamPlayer)
+  @ManyToOne(() => TeamPlayer, teamPlayer => teamPlayer.gameStats)
   teamPlayer: TeamPlayer;
 
   @Column({ type: 'integer' })

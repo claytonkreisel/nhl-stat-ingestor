@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
   OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Franchise } from './Franchise';
 import { Season } from './Season';
@@ -44,5 +45,6 @@ export class Team {
   awayGames: Game[];
 
   @OneToOne(() => TeamStatLine, teamStatLine => teamStatLine.team)
+  @JoinColumn()
   stats: TeamStatLine;
 }

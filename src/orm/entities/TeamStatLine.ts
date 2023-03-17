@@ -6,7 +6,7 @@ export class TeamStatLine {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => Team)
+  @OneToOne(() => Team, team => team.stats)
   team: Team;
 
   @Column({ type: 'integer' })

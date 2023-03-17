@@ -24,11 +24,11 @@ export class TeamPlayer {
   player: Player;
 
   @OneToMany(() => GameStatLine, gameStatLine => gameStatLine.game)
-  stats: GameStatLine[];
+  gameStats: GameStatLine[];
 
   @OneToOne(
     () => TeamPlayerStatLine,
     teamPlayerStatline => teamPlayerStatline.teamPlayer
   )
-  allStats: TeamPlayerStatLine;
+  stats: TeamPlayerStatLine;
 }
