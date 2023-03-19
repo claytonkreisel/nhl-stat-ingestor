@@ -175,7 +175,7 @@ export const ingestorProcess = async (
 
     // Data Storing Stage
     processStage = IngestorProcessStage.WRITING_TO_DB;
-    const dataStoreResult = storeGameData(gameData);
+    const dataStoreResult = await storeGameData(gameData);
     if (dataStoreResult instanceof Error)
       throw { message: dataStoreResult.message, processStage };
 

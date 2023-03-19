@@ -8,10 +8,10 @@ else
     echo "Modules folder already exists!"
 fi
 
-DB_FILE=nhl-stats.sqlite
+DB_FILE=prisma/nhl-stats.sqlite
 if [ ! -f "$DB_FILE" ]; then
     echo "Creating DB..."
-    yarn migration:run
+    yarn prisma migrate dev --name init 
 else
     echo "DB already exists at "$DB_FILE""
 fi

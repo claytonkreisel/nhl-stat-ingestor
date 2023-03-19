@@ -2,8 +2,8 @@ export default {
   clearMocks: true,
   collectCoverage: true,
   coverageReporters: ['text'],
-  // globalSetup: undefined,
-  // globalTeardown: undefined,
+  globalSetup: '<rootDir>/tests/setup.ts',
+  globalTeardown: '<rootDir>/tests/teardown.ts',
   // globals: {},
   resetMocks: true,
   // setupFiles: [],
@@ -11,4 +11,5 @@ export default {
   verbose: true,
   preset: 'ts-jest',
   testEnvironment: 'node',
+  testTimeout: 20000,
 };

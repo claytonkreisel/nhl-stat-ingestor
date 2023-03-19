@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Franchise {
+  id BigInt @id @default(autoincrement())
+  name String @unique
+  nhlId BigInt @unique
+  teams Team[]
+  stats FranchiseStatLine?
+}
+
+model FranchiseStatLine {
+  id BigInt @id @default(autoincrement())
+  franchise Franchise @relation(fields: [franchiseId], references: [id])
+  franchiseId BigInt @unique
+  goals Int
+  assists Int
+  points Int
+  hits Int
+  penaltyMinutes Float
+}
+
+model Game {
+  id BigInt @id @default(autoincrement())
+  nhlId BigInt @unique
+  season Season @relation(fields: [seasonId], references: [id])
+  seasonId BigInt
+  stats GameStatLine[]
+  homeTeam Team @relation(name: "homeGames", fields: [homeTeamId], references: [id])
+  homeTeamId BigInt
+  awayTeam Team @relation(name: "awayGames", fields: [awayTeamId], references: [id])
+  awayTeamId BigInt
+}
+
+model GameStatLine {
+  id BigInt @id @default(autoincrement())
+  game Game @relation(fields: [gameId], references: [id])
+  teamPlayerStats TeamPlayer[]
+  gameId BigInt
+  goals Int
+  assists Int
+  points Int
+  hits Int
+  penaltyMinutes Float
+}
+
+model Player {
+  id BigInt @id @default(autoincrement())
+  firstName String
+  lastName String
+  nhlId BigInt @unique
+  teams TeamPlayer[]
+  stats PlayerStatLine?
+  seasonStats SeasonStatLine[]
+}
+
+model PlayerStatLine {
+  id BigInt @id @default(autoincrement())
+  player Player @relation(fields: [playerId], references: [id])
+  playerId BigInt @unique
+  goals Int
+  assists Int
+  points Int
+  hits Int
+  penaltyMinutes Float
+}
+
+model Season {
+  id BigInt @id @default(autoincrement())
+  startYear Int @unique
+  games Game[]
+  teams Team[]
+  playerStats SeasonStatLine[]
+}
+
+model SeasonStatLine {
+  id BigInt @id @default(autoincrement())
+  season Season @relation(fields: [seasonId], references: [id])
+  seasonId BigInt
+  player Player @relation(fields: [playerId], references: [id])
+  playerId BigInt @unique
+  goals Int
+  assists Int
+  points Int
+  hits Int
+  penaltyMinutes Float
+}
+
+model Team {
+  id BigInt @id @default(autoincrement())
+  location String
+  name String
+  nhlId BigInt @unique
+  franchise Franchise @relation(fields: [franchiseId], references: [id])
+  franchiseId BigInt
+  season Season @relation(fields: [seasonId], references: [id])
+  seasonId BigInt
+  players TeamPlayer[]
+  homeGames Game[] @relation(name: "homeGames")
+  awayGames Game[] @relation(name: "awayGames")
+  stats TeamStatLine?
+}
+
+model TeamStatLine {
+  id BigInt @id @default(autoincrement())
+  team Team @relation(fields: [teamId], references: [id])
+  teamId BigInt @unique
+  goals Int
+  assists Int
+  points Int
+  hits Int
+  penaltyMinutes Float
+}
+
+model TeamPlayer {
+  id BigInt @id @default(autoincrement())
+  team Team @relation(fields: [teamId], references: [id])
+  teamId BigInt
+  player Player @relation(fields: [playerId], references: [id])
+  playerId BigInt
+  gameStats GameStatLine[]
+  stats TeamPlayerStatLine?
+}
+
+model TeamPlayerStatLine {
+  id BigInt @id @default(autoincrement())
+  teamPlayer TeamPlayer @relation(fields: [teamPlayerId], references: [id])
+  teamPlayerId BigInt @unique
+  goals Int
+  assists Int
+  points Int
+  hits Int
+  penaltyMinutes Float
+}
