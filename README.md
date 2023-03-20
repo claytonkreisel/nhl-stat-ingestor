@@ -27,5 +27,5 @@ This project uses the popular `jest` module in order to perform unit and e2e tes
 
 In order to run the tests for this project use the `yarn test` command. If you have a specific file you would like to test you can do so by using  `yarn test path/to/test/file.spec.ts`.
 
-### ORM (TypeORM)
-This project uses the power of TypeORM. In order to access in-depth documentation visit the [TypeORM Documentation Site](https://typeorm.io/).
+### ORM (Prisma)
+This project uses the power of Prisma. In order to access in-depth documentation visit the [Prisma Documentation Site](https://www.prisma.io/docs).

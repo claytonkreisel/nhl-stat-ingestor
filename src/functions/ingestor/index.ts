@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { NhlApiBaseUrl } from '../common';
+import { NhlApiBaseUrl } from '../../common';
 import {
   IngestorProcessResponse,
   IngestorProcessStage,
@@ -189,7 +189,7 @@ export const ingestorProcess = async (
     };
   } catch (e) {
     processStatus = IngestorProcessStatus.ERROR;
-    console.error(`ERROR: ${e}`);
+    console.log(`ERROR: ${e.message}`);
     const ingestorProcessError: IngestorProcessError = {
       processStage: e.processStage,
       processStatus,

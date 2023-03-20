@@ -11,7 +11,7 @@ fi
 DB_FILE=prisma/nhl-stats.sqlite
 if [ ! -f "$DB_FILE" ]; then
     echo "Creating DB..."
-    yarn prisma migrate dev --name init 
+    yarn dotenv -e .env.development prisma migrate dev --name init 
 else
     echo "DB already exists at "$DB_FILE""
 fi

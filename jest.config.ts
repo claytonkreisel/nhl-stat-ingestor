@@ -12,4 +12,7 @@ export default {
   preset: 'ts-jest',
   testEnvironment: 'node',
   testTimeout: 20000,
+  maxWorkers: 1,
+  maxConcurrency: 1,
+  runner: 'jest-serial-runner',
 };

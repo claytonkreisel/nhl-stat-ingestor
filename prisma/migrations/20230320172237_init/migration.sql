@@ -1,14 +1,14 @@
 -- CreateTable
 CREATE TABLE "Franchise" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
-    "nhlId" BIGINT NOT NULL
+    "nhlId" INTEGER NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "FranchiseStatLine" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
-    "franchiseId" BIGINT NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "franchiseId" INTEGER NOT NULL,
     "goals" INTEGER NOT NULL,
     "assists" INTEGER NOT NULL,
     "points" INTEGER NOT NULL,
@@ -19,11 +19,11 @@ CREATE TABLE "FranchiseStatLine" (
 
 -- CreateTable
 CREATE TABLE "Game" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
-    "nhlId" BIGINT NOT NULL,
-    "seasonId" BIGINT NOT NULL,
-    "homeTeamId" BIGINT NOT NULL,
-    "awayTeamId" BIGINT NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "nhlId" INTEGER NOT NULL,
+    "seasonId" INTEGER NOT NULL,
+    "homeTeamId" INTEGER NOT NULL,
+    "awayTeamId" INTEGER NOT NULL,
     CONSTRAINT "Game_seasonId_fkey" FOREIGN KEY ("seasonId") REFERENCES "Season" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Game_homeTeamId_fkey" FOREIGN KEY ("homeTeamId") REFERENCES "Team" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Game_awayTeamId_fkey" FOREIGN KEY ("awayTeamId") REFERENCES "Team" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
@@ -31,8 +31,8 @@ CREATE TABLE "Game" (
 
 -- CreateTable
 CREATE TABLE "GameStatLine" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
-    "gameId" BIGINT NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "gameId" INTEGER NOT NULL,
     "goals" INTEGER NOT NULL,
     "assists" INTEGER NOT NULL,
     "points" INTEGER NOT NULL,
@@ -43,16 +43,16 @@ CREATE TABLE "GameStatLine" (
 
 -- CreateTable
 CREATE TABLE "Player" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
-    "nhlId" BIGINT NOT NULL
+    "nhlId" INTEGER NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "PlayerStatLine" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
-    "playerId" BIGINT NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "playerId" INTEGER NOT NULL,
     "goals" INTEGER NOT NULL,
     "assists" INTEGER NOT NULL,
     "points" INTEGER NOT NULL,
@@ -63,15 +63,15 @@ CREATE TABLE "PlayerStatLine" (
 
 -- CreateTable
 CREATE TABLE "Season" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "startYear" INTEGER NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "SeasonStatLine" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
-    "seasonId" BIGINT NOT NULL,
-    "playerId" BIGINT NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "seasonId" INTEGER NOT NULL,
+    "playerId" INTEGER NOT NULL,
     "goals" INTEGER NOT NULL,
     "assists" INTEGER NOT NULL,
     "points" INTEGER NOT NULL,
@@ -83,20 +83,20 @@ CREATE TABLE "SeasonStatLine" (
 
 -- CreateTable
 CREATE TABLE "Team" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "location" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "nhlId" BIGINT NOT NULL,
-    "franchiseId" BIGINT NOT NULL,
-    "seasonId" BIGINT NOT NULL,
+    "nhlId" INTEGER NOT NULL,
+    "franchiseId" INTEGER NOT NULL,
+    "seasonId" INTEGER NOT NULL,
     CONSTRAINT "Team_franchiseId_fkey" FOREIGN KEY ("franchiseId") REFERENCES "Franchise" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Team_seasonId_fkey" FOREIGN KEY ("seasonId") REFERENCES "Season" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
 CREATE TABLE "TeamStatLine" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
-    "teamId" BIGINT NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "teamId" INTEGER NOT NULL,
     "goals" INTEGER NOT NULL,
     "assists" INTEGER NOT NULL,
     "points" INTEGER NOT NULL,
@@ -107,17 +107,17 @@ CREATE TABLE "TeamStatLine" (
 
 -- CreateTable
 CREATE TABLE "TeamPlayer" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
-    "teamId" BIGINT NOT NULL,
-    "playerId" BIGINT NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "teamId" INTEGER NOT NULL,
+    "playerId" INTEGER NOT NULL,
     CONSTRAINT "TeamPlayer_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "TeamPlayer_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES "Player" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
 CREATE TABLE "TeamPlayerStatLine" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
-    "teamPlayerId" BIGINT NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "teamPlayerId" INTEGER NOT NULL,
     "goals" INTEGER NOT NULL,
     "assists" INTEGER NOT NULL,
     "points" INTEGER NOT NULL,
@@ -128,8 +128,8 @@ CREATE TABLE "TeamPlayerStatLine" (
 
 -- CreateTable
 CREATE TABLE "_GameStatLineToTeamPlayer" (
-    "A" BIGINT NOT NULL,
-    "B" BIGINT NOT NULL,
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL,
     CONSTRAINT "_GameStatLineToTeamPlayer_A_fkey" FOREIGN KEY ("A") REFERENCES "GameStatLine" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT "_GameStatLineToTeamPlayer_B_fkey" FOREIGN KEY ("B") REFERENCES "TeamPlayer" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -145,6 +145,9 @@ CREATE UNIQUE INDEX "FranchiseStatLine_franchiseId_key" ON "FranchiseStatLine"("
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Game_nhlId_key" ON "Game"("nhlId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "GameStatLine_gameId_key" ON "GameStatLine"("gameId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Player_nhlId_key" ON "Player"("nhlId");
@@ -163,6 +166,9 @@ CREATE UNIQUE INDEX "Team_nhlId_key" ON "Team"("nhlId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "TeamStatLine_teamId_key" ON "TeamStatLine"("teamId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "TeamPlayer_playerId_teamId_key" ON "TeamPlayer"("playerId", "teamId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "TeamPlayerStatLine_teamPlayerId_key" ON "TeamPlayerStatLine"("teamPlayerId");

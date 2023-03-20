@@ -8,6 +8,7 @@ import {
   completedGameLiveFeedRequest,
   inProgressGameLiveFeedRequest,
 } from './mocks/live-feed-data';
+
 describe('Test checkGameId()', () => {
   it('Test for an integer that is too low passed as gameId', () => {
     expect(checkGameId(2016999999)).toStrictEqual(

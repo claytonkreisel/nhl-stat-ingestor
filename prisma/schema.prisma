@@ -11,17 +11,17 @@ datasource db {
 }
 
 model Franchise {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   name String @unique
-  nhlId BigInt @unique
+  nhlId Int @unique
   teams Team[]
   stats FranchiseStatLine?
 }
 
 model FranchiseStatLine {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   franchise Franchise @relation(fields: [franchiseId], references: [id])
-  franchiseId BigInt @unique
+  franchiseId Int @unique
   goals Int
   assists Int
   points Int
@@ -30,22 +30,22 @@ model FranchiseStatLine {
 }
 
 model Game {
-  id BigInt @id @default(autoincrement())
-  nhlId BigInt @unique
+  id Int @id @default(autoincrement())
+  nhlId Int @unique
   season Season @relation(fields: [seasonId], references: [id])
-  seasonId BigInt
-  stats GameStatLine[]
+  seasonId Int
+  stats GameStatLine?
   homeTeam Team @relation(name: "homeGames", fields: [homeTeamId], references: [id])
-  homeTeamId BigInt
+  homeTeamId Int
   awayTeam Team @relation(name: "awayGames", fields: [awayTeamId], references: [id])
-  awayTeamId BigInt
+  awayTeamId Int
 }
 
 model GameStatLine {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   game Game @relation(fields: [gameId], references: [id])
   teamPlayerStats TeamPlayer[]
-  gameId BigInt
+  gameId Int @unique
   goals Int
   assists Int
   points Int
@@ -54,19 +54,19 @@ model GameStatLine {
 }
 
 model Player {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   firstName String
   lastName String
-  nhlId BigInt @unique
+  nhlId Int @unique
   teams TeamPlayer[]
   stats PlayerStatLine?
   seasonStats SeasonStatLine[]
 }
 
 model PlayerStatLine {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   player Player @relation(fields: [playerId], references: [id])
-  playerId BigInt @unique
+  playerId Int @unique
   goals Int
   assists Int
   points Int
@@ -75,7 +75,7 @@ model PlayerStatLine {
 }
 
 model Season {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   startYear Int @unique
   games Game[]
   teams Team[]
@@ -83,11 +83,11 @@ model Season {
 }
 
 model SeasonStatLine {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   season Season @relation(fields: [seasonId], references: [id])
-  seasonId BigInt
+  seasonId Int
   player Player @relation(fields: [playerId], references: [id])
-  playerId BigInt @unique
+  playerId Int @unique
   goals Int
   assists Int
   points Int
@@ -96,14 +96,14 @@ model SeasonStatLine {
 }
 
 model Team {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   location String
   name String
-  nhlId BigInt @unique
+  nhlId Int @unique
   franchise Franchise @relation(fields: [franchiseId], references: [id])
-  franchiseId BigInt
+  franchiseId Int
   season Season @relation(fields: [seasonId], references: [id])
-  seasonId BigInt
+  seasonId Int
   players TeamPlayer[]
   homeGames Game[] @relation(name: "homeGames")
   awayGames Game[] @relation(name: "awayGames")
@@ -111,9 +111,9 @@ model Team {
 }
 
 model TeamStatLine {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   team Team @relation(fields: [teamId], references: [id])
-  teamId BigInt @unique
+  teamId Int @unique
   goals Int
   assists Int
   points Int
@@ -122,19 +122,20 @@ model TeamStatLine {
 }
 
 model TeamPlayer {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   team Team @relation(fields: [teamId], references: [id])
-  teamId BigInt
+  teamId Int
   player Player @relation(fields: [playerId], references: [id])
-  playerId BigInt
+  playerId Int
   gameStats GameStatLine[]
   stats TeamPlayerStatLine?
+  @@unique([playerId, teamId])
 }
 
 model TeamPlayerStatLine {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   teamPlayer TeamPlayer @relation(fields: [teamPlayerId], references: [id])
-  teamPlayerId BigInt @unique
+  teamPlayerId Int @unique
   goals Int
   assists Int
   points Int
